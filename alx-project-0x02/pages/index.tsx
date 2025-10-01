@@ -1,8 +1,11 @@
-//pages/index.tsx
-import Head from "next/head";
+// pages/index.tsx
+import Header from "../components/layout/Header";
 
 export default function Home() {
   return (
-    <h1>Welcome to Next.js!</h1>
+    <>
+      <Header />
+      <h1>Welcome to Next.js!</h1>
+    </>
   );
 }
