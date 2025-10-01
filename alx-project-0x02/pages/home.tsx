@@ -1,22 +1,44 @@
 // pages/home.tsx
+import { useState } from "react";
 import Card from "../components/common/Card";
+import PostModal from "../components/common/PostModal";
+
+type Post = {
+  title: string;
+  content: string;
+};
 
 export default function HomePage() {
-  return (
-       <div className="p-6 space-y-4">
-      <h1 className="text-2xl font-bold mb-6">Welcome to the Home Page</h1>
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-      <Card
-        title="First Card"
-        content="This is the content of the first card."
-      />
-      <Card
-        title="Second Card"
-        content="Here is some more content for the second card."
-      />
-      <Card
-        title="Third Card"
-        content="And this is the content of the third card."
+  const handleSave = (title: string, content: string) => {
+    setPosts([...posts, { title, content }]);
+  };
+
+  return (
+    <div className="p-6 space-y-6">
+      <h1 className="text-2xl font-bold">Welcome to the Home Page</h1>
+
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+      >
+        + Add Post
+      </button>
+
+      {/* Render posts */}
+      <div className="grid md:grid-cols-2 gap-4">
+        {posts.map((post, index) => (
+          <Card key={index} title={post.title} content={post.content} />
+        ))}
+      </div>
+
+      {/* Post Modal */}
+      <PostModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSave={handleSave}
       />
     </div>
   );
